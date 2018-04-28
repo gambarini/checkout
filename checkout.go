@@ -2,32 +2,9 @@ package checkout
 
 import "errors"
 
-
-const (
-	ItemGoogleHomeSku   = "120P90"
-	ItemMacbookProSku   = "43N23P"
-	ItemAlexaSpeakerSku = "A304SD"
-	ItemDongleXSku      = "234234"
-)
-
 var (
 	ErrItemNotAvailable = errors.New("item not available")
-	Items               = NewItems()
-	Rules				= NewRules()
 )
-
-type Item struct {
-	Sku   string
-	Name  string
-	Price int64
-	Qty   int
-}
-
-type RuleApply func(checkout *Checkout) (err error)
-
-type Rule struct {
-	Apply RuleApply
-}
 
 type Checkout struct {
 	Rules     []Rule
@@ -94,51 +71,5 @@ func (checkout *Checkout) Total() (total int64, err error) {
 		total += (Items[sku].Price * int64(purchase.Qty)) - purchase.Discount
 	}
 
-	return total, err
-}
-
-func NewRules() (rules []Rule) {
-
-	rules = make([]Rule, 3)
-
-	rules[0] = Rule{MacFreeDongleSpecial}
-	rules[1] = Rule{ThreeGoogleHomeSpecial}
-	rules[2] = Rule{OverThreeAlexaSpeakerSpecial}
-
-	return rules
-}
-
-func NewItems() (items map[string]*Item) {
-
-	items = make(map[string]*Item, 4)
-
-	items[ItemGoogleHomeSku] = &Item{
-		Sku:   ItemGoogleHomeSku,
-		Name:  "Google Home",
-		Qty:   10,
-		Price: 4999,
-	}
-
-	items[ItemMacbookProSku] = &Item{
-		Sku:   ItemMacbookProSku,
-		Name:  "MacBook Pro",
-		Qty:   5,
-		Price: 539999,
-	}
-
-	items[ItemAlexaSpeakerSku] = &Item{
-		Sku:   ItemAlexaSpeakerSku,
-		Name:  "Alexa Speaker",
-		Qty:   10,
-		Price: 10950,
-	}
-
-	items[ItemDongleXSku] = &Item{
-		Sku:   ItemDongleXSku,
-		Name:  "DongleX",
-		Qty:   2,
-		Price: 3000,
-	}
-
-	return items
+	return total, nil
 }

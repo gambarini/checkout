@@ -1,10 +1,33 @@
 package checkout
 
-import "fmt"
+import (
+	"fmt"
+)
+
+var (
+	Rules = NewRules()
+)
+
+type RuleApply func(checkout *Checkout) (err error)
+
+type Rule struct {
+	Apply RuleApply
+}
+
+func NewRules() (rules []Rule) {
+
+	rules = make([]Rule, 3)
+
+	rules[0] = Rule{MacFreeDongleSpecial}
+	rules[1] = Rule{ThreeGoogleHomeSpecial}
+	rules[2] = Rule{OverThreeAlexaSpeakerSpecial}
+
+	return rules
+}
 
 func MacFreeDongleSpecial(checkout *Checkout) (err error) {
 
-	macPurchase, ok := checkout.Purchases[ItemMacbookProSku]
+	macPurchase, ok := checkout.Purchases[ItemMacBookProSku]
 
 	if !ok {
 		return nil
@@ -45,7 +68,7 @@ func ThreeGoogleHomeSpecial(checkout *Checkout) (err error) {
 
 	for i := 1; i <= googlePurchase.Qty; i++ {
 
-		if i % 3 == 0 {
+		if i%3 == 0 {
 
 			googlePurchase.Discount += googleItem.Price
 		}

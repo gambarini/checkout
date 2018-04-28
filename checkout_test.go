@@ -70,12 +70,12 @@ func TestMacFreeDongleSpecialCheckout(t *testing.T) {
 
 	checkout := NewCheckout(Rules)
 
-	item, _ := Items[ItemMacbookProSku]
+	item, _ := Items[ItemMacBookProSku]
 	checkout.Scan(item)
 
 	total, _ := checkout.Total()
 
-	assert.Equal(t, 1, checkout.HasItem(ItemMacbookProSku))
+	assert.Equal(t, 1, checkout.HasItem(ItemMacBookProSku))
 	assert.Equal(t, 1, checkout.HasItem(ItemDongleXSku))
 	assert.Equal(t, int64(539999), total)
 
@@ -87,13 +87,13 @@ func TestTwoMacFreeDongleSpecialCheckout(t *testing.T) {
 
 	checkout := NewCheckout(Rules)
 
-	item, _ := Items[ItemMacbookProSku]
+	item, _ := Items[ItemMacBookProSku]
 	checkout.Scan(item)
 	checkout.Scan(item)
 
 	total, _ := checkout.Total()
 
-	assert.Equal(t, 2, checkout.HasItem(ItemMacbookProSku))
+	assert.Equal(t, 2, checkout.HasItem(ItemMacBookProSku))
 	assert.Equal(t, 2, checkout.HasItem(ItemDongleXSku))
 	assert.Equal(t, int64(1079998), total)
 
@@ -169,7 +169,7 @@ func TestAllSpecialsCheckout(t *testing.T) {
 	checkout.Scan(item)
 	checkout.Scan(item)
 
-	item, _ = Items[ItemMacbookProSku]
+	item, _ = Items[ItemMacBookProSku]
 	checkout.Scan(item)
 
 	item, _ = Items[ItemGoogleHomeSku]
@@ -184,7 +184,7 @@ func TestAllSpecialsCheckout(t *testing.T) {
 	total, _ := checkout.Total()
 
 	assert.Equal(t, 4, checkout.HasItem(ItemAlexaSpeakerSku))
-	assert.Equal(t, 1, checkout.HasItem(ItemMacbookProSku))
+	assert.Equal(t, 1, checkout.HasItem(ItemMacBookProSku))
 	assert.Equal(t, 4, checkout.HasItem(ItemGoogleHomeSku))
 	assert.Equal(t, 2, checkout.HasItem(ItemDongleXSku))
 	assert.Equal(t, int64(597416), total)
