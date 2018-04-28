@@ -99,6 +99,26 @@ func TestTwoMacFreeDongleSpecialCheckout(t *testing.T) {
 
 }
 
+func TestMacFreeDongleSpecialNoDongleCheckout(t *testing.T) {
+
+	Items = NewItems()
+
+	checkout := NewCheckout(Rules)
+
+	item, _ := Items[ItemMacBookProSku]
+	checkout.Scan(item)
+
+	item, _ = Items[ItemDongleXSku]
+	item.Qty = 0
+
+	_, err := checkout.Total()
+
+	assert.NotEmpty(t, err)
+	assert.Equal(t, 1, checkout.HasItem(ItemMacBookProSku))
+	assert.Equal(t, 0, checkout.HasItem(ItemDongleXSku))
+
+}
+
 func TestThreeGoogleHomeSpecialCheckout(t *testing.T) {
 
 	Items = NewItems()
